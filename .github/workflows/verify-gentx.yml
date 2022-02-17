@@ -2,7 +2,7 @@ name: GenTx
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   verify-gentx:
     runs-on: ubuntu-latest
