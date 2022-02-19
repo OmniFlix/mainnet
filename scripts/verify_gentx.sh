@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 FLIX_HOME="/tmp/omniflixhub$(date +%s)"
 RANDOM_KEY="random-validator-key"
-CHAIN_ID=omniflixhubd-1
+CHAIN_ID=omniflixhub-1
 VERSION=v0.4.0
 
 
@@ -11,12 +11,14 @@ GENTX_SUBMISSION_DEADLINE=$(date -u -d '2022-02-21T00:00:00.000Z' +'%s')
 now=$(date -u +'%s')
 
 declare -i maxbond=10000000
-if [ $now -le GENTX_SUBMISSION_START ]; then
+maxcommission="0.1"
+mincommission="0.05"
+if [ $now -lt $GENTX_SUBMISSION_START ]; then
     echo 'Gentx submission not started yet'
     exit 1
 fi
 
-if [ $now -ge GENTX_SUBMISSION_DEADLINE ]; then
+if [ $now -gt $GENTX_SUBMISSION_DEADLINE ]; then
     echo 'Gentx submission is closed'
     exit 1
 fi
@@ -24,7 +26,7 @@ GENTX_FILE=$(find ./$CHAIN_ID/gentxs -iname "*.json")
 FILES_COUNT=$(find ./$CHAIN_ID/gentxs -iname "*.json" | wc -l)
 LEN_GENTX=$(echo ${#GENTX_FILE})
 
-if [ $FILES_COUNT -g 1 ]; then
+if [ $FILES_COUNT -gt 1 ]; then
     echo 'Invalid! found more than 1 json file'
     exit 1
 fi
@@ -39,15 +41,27 @@ else
     echo $GENTX_FILE
 
     denom=$(jq -r '.body.messages[0].value.denom' $GENTX_FILE)
-
-    amount=$(jq -r '.body.messages[0].value.amount' $GENTX_FILE)
     if [ $denom != "uflix" ]; then
         echo "invalid denom"
         exit 1
     fi
 
+    amount=$(jq -r '.body.messages[0].value.amount' $GENTX_FILE)
+
     if [ $amount -gt $maxbond ]; then
         echo "bonded amount is too high: $amt > $maxbond"
+        exit 1
+    fi
+
+    commission=$(jq -r '.body.messages[0].commission.rate' $GENTX_FILE)
+    out=$(echo "$commission > $maxcommission" | bc -q)
+    if [ $out = 1 ]; then
+        echo "commission is high: $commission > $maxcommission"
+        exit 1
+    fi
+    out2=$(echo "$commission < $mincommission" | bc -q)
+    if [ $out2 = 1  ]; then
+        echo "commission is low: $commission < $mincommission"
         exit 1
     fi
     echo "...........Init omniflixhub.............."
@@ -55,7 +69,7 @@ else
     wget -q https://github.com/OmniFlix/omniflixhub/releases/download/$VERSION/omniflixhubd -O omniflixhubd
     chmod +x omniflixhubd
     
-    ./omniflixhubd keys add $RANDOM_KEY --home $FLIX_HOME
+    ./omniflixhubd keys add $RANDOM_KEY --home $FLIX_HOME --keyring-backend test
 
     ./omniflixhubd init --chain-id $CHAIN_ID validator --home $FLIX_HOME
 
@@ -86,10 +100,9 @@ else
 
     echo "...checking network status.."
 
-    ./omniflixhubd status --node http://localhost:26657
+    ./omniflixhubd status --node http://localhost:26657 | jq
 
     echo "...Cleaning ..."
     killall omniflixhubd >/dev/null 2>&1
     rm -rf $FLIX_HOME >/dev/null 2>&1
 fi
-
