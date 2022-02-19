@@ -6,7 +6,7 @@ VERSION=v0.4.0
 
 
 GENTX_SUBMISSION_START=$(date -u -d '2022-02-19T00:00:00.000Z' +'%s')
-GENTX_SUBMISSION_DEADLINE=$(date -u -d '2022-02-21T00:00:00.000Z' +'%s')
+GENTX_SUBMISSION_DEADLINE=$(date -u -d '2022-02-21T11:00:00.000Z' +'%s')
 
 now=$(date -u +'%s')
 
