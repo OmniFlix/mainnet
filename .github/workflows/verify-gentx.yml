@@ -1,6 +1,6 @@
 name: GenTx
 on:
-  push:
+  pull_request:
     branches:
       - main
 jobs:
