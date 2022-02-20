@@ -1,2 +1,2 @@
-# mainnet
-Omniflix Hub Mainnet Resources
+#mainnet
+OmniFlix Hub resources for mainnet
