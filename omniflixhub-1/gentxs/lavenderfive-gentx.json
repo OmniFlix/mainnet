@@ -1,0 +1,61 @@
+{
+    "body": {
+        "messages": [
+            {
+                "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
+                "description": {
+                    "moniker": " Ŀavender.Five Nodes 🐝",
+                    "identity": "F87ADDB700C0CC94",
+                    "website": "http://www.lavenderfive.com/",
+                    "security_contact": "hello@lavenderfive.com",
+                    "details": "Lavender.Five Nodes is committed to providing world class validator services to make your life easy, including 100% soft slash protection. \n Come say Hi! https://twitter.com/lavender_five"
+                },
+                "commission": {
+                    "rate": "0.050000000000000000",
+                    "max_rate": "0.100000000000000000",
+                    "max_change_rate": "0.050000000000000000"
+                },
+                "min_self_delegation": "1",
+                "delegator_address": "omniflix140l6y2gp3gxvay6qtn70re7z2s0gn57z38za3l",
+                "validator_address": "omniflixvaloper140l6y2gp3gxvay6qtn70re7z2s0gn57zu4sush",
+                "pubkey": {
+                    "@type": "/cosmos.crypto.ed25519.PubKey",
+                    "key": "8b0+H5UcR/qcK/joTNDU0Qu3kkyF5tbShrf/5SnfFng="
+                },
+                "value": {
+                    "denom": "uflix",
+                    "amount": "10000000"
+                }
+            }
+        ],
+        "memo": "40e386309f9815dba6dadf6b2704b37637f2efa6@192.168.0.182:26656",
+        "timeout_height": "0",
+        "extension_options": [],
+        "non_critical_extension_options": []
+    },
+    "auth_info": {
+        "signer_infos": [
+            {
+                "public_key": {
+                    "@type": "/cosmos.crypto.secp256k1.PubKey",
+                    "key": "AgAxffwFDTjrK5UoAmT9aVOuI7CGxe3T5Wsxx2kWWhJB"
+                },
+                "mode_info": {
+                    "single": {
+                        "mode": "SIGN_MODE_LEGACY_AMINO_JSON"
+                    }
+                },
+                "sequence": "0"
+            }
+        ],
+        "fee": {
+            "amount": [],
+            "gas_limit": "200000",
+            "payer": "",
+            "granter": ""
+        }
+    },
+    "signatures": [
+        "k+MjvBLSG8CGAqSmSegHs7YczRZnfEbr0txIqFzD978EL+PlTiKbP8HNqu/CXKWnXKyBQQM0T3c1TuIsH7Hcsg=="
+    ]
+}
