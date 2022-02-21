@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CHAIN_ID=omniflixhubd-1
+CHAIN_ID=omniflixhub-1
 NODE_HOME=/tmp/ofhub
 CONFIG=/tmp/ofhub/config
 
@@ -15,7 +15,7 @@ cp $CHAIN_ID/genesis.json $CONFIG/genesis.json
 for i in $CHAIN_ID/gentxs/*.json; do
   echo $i
   echo $(jq -r '.body.messages[0].delegator_address' $i)
-  omniflixhubd add-genesis-account $(jq -r '.body.messages[0].delegator_address' $i) 100000000uflix --home $NODE_HOME
+  omniflixhubd add-genesis-account $(jq -r '.body.messages[0].delegator_address' $i) 10000000uflix --home $NODE_HOME
   cp $i $CONFIG/gentx/
 done
 echo "Collecting gentxs ..."
