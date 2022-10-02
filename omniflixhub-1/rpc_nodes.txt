@@ -1,1 +1,2 @@
 https://rpc.omniflix.network:443
+https://rpc-omniflix.huginn.tech:443

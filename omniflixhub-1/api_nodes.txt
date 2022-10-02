@@ -1,1 +1,2 @@
 https://rest.omniflix.network:443
+https://api.omniflix.huginn.tech:443
